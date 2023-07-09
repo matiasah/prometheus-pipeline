@@ -160,7 +160,7 @@ pipeline {
                     script {
   
                         // Kustomize
-                        sh "kustomize build"
+                        sh "kustomize build > prometheus-template.yaml"
   
                     }
   
