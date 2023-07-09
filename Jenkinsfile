@@ -23,11 +23,6 @@ pipeline {
 
     parameters {
         choice(description: "Action", name: "Action", choices: ["Plan", "Apply", "Destroy"])
-        string(description: "Cluster Name", name: "CLUSTER_NAME", defaultValue: env.CLUSTER_NAME ? env.CLUSTER_NAME : '')
-        choice(description: "Log Level", name: "LOG_LEVEL", choices: ["ERROR", "INFO", "DEBUG", "CRITICAL", "OFF"])
-        choice(description: "Target System", name: "TARGET_SYSTEM", choices: ["linux", "windows"])
-        credentials(description: "DataDog API Key", name: "API_KEY_CREDENTIAL_ID", defaultValue: env.API_KEY_CREDENTIAL_ID ? env.API_KEY_CREDENTIAL_ID : '', credentialType: "Secret text", required: true)
-        booleanParam(description: "Deploy Pod Security Policy", name: "DEPLOY_CLUSTER_AGENT_PSP", defaultValue: env.DEPLOY_CLUSTER_AGENT_PSP ? env.DEPLOY_CLUSTER_AGENT_PSP : false)
         booleanParam(description: "Debug", name: "DEBUG", defaultValue: env.DEBUG ? env.DEBUG : "false")
     }
 
@@ -134,6 +129,14 @@ pipeline {
 
                         // Cluster agent options
                         PROMETHEUS_OPTIONS = " "
+
+                        // If DEBUG is enabled
+                        if (env.DEBUG.equals("true")) {
+
+                            // Enable debug
+                            PROMETHEUS_OPTIONS += "--debug "
+
+                        }
 
                         // Template
                         sh "helm template prometheus prometheus-community/kube-prometheus-stack -f prometheus-values.yaml ${PROMETHEUS_OPTIONS.trim()} --namespace prometheus > prometheus-template.yaml"
