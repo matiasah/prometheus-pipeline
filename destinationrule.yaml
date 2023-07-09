@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: prometheus
+  namespace: prometheus
+spec:
+  host: prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local
+  subsets:
+  - labels:
+      app.kubernetes.io/instance: prometheus-kube-prometheus-prometheus
+      app.kubernetes.io/managed-by: prometheus-operator
+      app.kubernetes.io/name: prometheus
+    name: http
+  trafficPolicy:
+    tls:
+      mode: DISABLE
