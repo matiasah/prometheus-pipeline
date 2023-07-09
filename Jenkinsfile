@@ -60,7 +60,7 @@ pipeline {
                     tty: true
                   - command:
                     - "cat"
-                    image: "registry.k8s.io/kustomize/kustomize:latest"
+                    image: "k8s.gcr.io/kustomize/kustomize:latest"
                     imagePullPolicy: "IfNotPresent"
                     name: "kustomize"
                     resources: {}
