@@ -159,7 +159,8 @@ pipeline {
   
                     script {
   
-                        sh "echo test"
+                        // Kustomize
+                        sh "kustomize build"
   
                     }
   
