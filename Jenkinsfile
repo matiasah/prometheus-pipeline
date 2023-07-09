@@ -155,7 +155,7 @@ pipeline {
 
                 }
 
-                container ("kustmoze") {
+                container ("kustomize") {
   
                     script {
   
