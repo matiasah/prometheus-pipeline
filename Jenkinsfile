@@ -58,6 +58,13 @@ pipeline {
                     name: "kubectl"
                     resources: {}
                     tty: true
+                  - command:
+                    - "cat"
+                    image: "registry.k8s.io/kustomize/kustomize:latest"
+                    imagePullPolicy: "IfNotPresent"
+                    name: "kustomize"
+                    resources: {}
+                    tty: true
                   serviceAccountName: jenkins-slave
                   volumes:
                   - emptyDir:
@@ -146,6 +153,16 @@ pipeline {
         
                     }
 
+                }
+
+                container ("kustmoze") {
+  
+                    script {
+  
+                        sh "echo test"
+  
+                    }
+  
                 }
 
             }
