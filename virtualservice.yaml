@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: prometheus
+  namespace: prometheus
+spec:
+  gateways:
+  - gateway/istio-ingressgateway
+  hosts:
+  - "*"
+  http:
+  - match:
+    - uri:
+        prefix: /prometheus/
+    name: http
+    rewrite:
+      uri: /
+    route:
+    - destination:
+        host: prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local
+        port:
+          number: 9090
+        subset: http
+      weight: 100
