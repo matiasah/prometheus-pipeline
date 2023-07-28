@@ -117,6 +117,7 @@ pipeline {
 
                         // Apply
                         sh "kubectl create namespace prometheus --dry-run=client -o yaml | kubectl apply -f -"
+                        sh "kubectl create namespace prometheus-adapter --dry-run-client -o yaml | kubectl apply -f"
 
                     }
 
@@ -126,7 +127,7 @@ pipeline {
 
         }
 
-        stage ("Template: Plan") {
+        stage ("Prometheus: Plan") {
 
             steps {
 
@@ -134,7 +135,7 @@ pipeline {
 
                     script {
 
-                        // Cluster agent options
+                        // Prometheus options
                         PROMETHEUS_OPTIONS = " "
 
                         // If DEBUG is enabled
@@ -170,7 +171,7 @@ pipeline {
 
         }
 
-        stage ("Template: Apply") {
+        stage ("Prometheus: Apply") {
 
             when {
                 
@@ -218,6 +219,87 @@ pipeline {
 
         }
 
+        stage ("Prometheus Adapter: Plan") {
+
+            steps {
+
+                container ("helm") {
+
+                    script {
+
+                        // Prometheus options
+                        PROMETHEUS_ADAPTER_OPTIONS = " "
+
+                        // If DEBUG is enabled
+                        if (env.DEBUG.equals("true")) {
+
+                            // Enable debug
+                            PROMETHEUS_ADAPTER_OPTIONS += "--debug "
+
+                        }
+
+                        // Template
+                        sh "helm template prometheus prometheus-community/prometheus-adapter -f prometheus-adapter-values.yaml ${PROMETHEUS_ADAPTER_OPTIONS.trim()} --namespace prometheus-adapter --api-versions apiregistration.k8s.io/v1 > prometheus-adapter-template.yaml"
+
+                        // Print Yaml
+                        sh "cat prometheus-adapter-template.yaml"
+        
+                    }
+
+                }
+
+            }
+
+        }
+
+        stage ("Prometheus Adapter: Apply") {
+
+            when {
+                
+                expression {
+                    return !env.ACTION.equals("Plan")
+                }
+                
+            }
+
+            steps {
+
+                container ("kubectl") {
+
+                    script {
+
+                        // Apply
+                        if (env.ACTION.equals("Apply")) {
+
+                            // Apply
+                            sh "kubectl apply -f prometheus-adapter-template.yaml"
+
+                        // Destroy
+                        } else if (env.ACTION.equals("Destroy")) {
+
+                            try {
+                                
+                                // Destroy
+                                sh "kubectl delete -f prometheus-adapter-template.yaml"
+
+                            } catch (Exception e) {
+
+                                // Do nothing
+
+                            }
+
+                        }
+
+                        sh "rm prometheus-adapter-template.yaml"
+
+                    }
+
+                }
+
+            }
+
+        }
+
         stage ("Restart") {
 
             when {
@@ -236,6 +318,9 @@ pipeline {
 
                         sh "kubectl rollout restart deployment -n prometheus"
                         sh "kubectl rollout restart daemonset -n prometheus"
+
+                        sh "kubectl rollout restart deployment -n prometheus-adapter"
+                        sh "kubectl rollout restart daemonset -n prometheus-adapter"
 
                     }
 
