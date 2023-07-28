@@ -239,7 +239,7 @@ pipeline {
                         }
 
                         // Template
-                        sh "helm template prometheus prometheus-community/prometheus-adapter -f prometheus-adapter-values.yaml ${PROMETHEUS_ADAPTER_OPTIONS.trim()} --namespace prometheus-adapter --api-versions apiregistration.k8s.io/v1 > prometheus-adapter-template.yaml"
+                        sh "helm template prometheus-adapter prometheus-community/prometheus-adapter -f prometheus-adapter-values.yaml ${PROMETHEUS_ADAPTER_OPTIONS.trim()} --namespace prometheus-adapter --api-versions apiregistration.k8s.io/v1 > prometheus-adapter-template.yaml"
 
                         // Print Yaml
                         sh "cat prometheus-adapter-template.yaml"
