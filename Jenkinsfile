@@ -175,23 +175,12 @@ pipeline {
   
                         // Kustomize
                         sh "kustomize build > prometheus-template.yaml"
-  
-                    }
-  
-                }
-
-                container ("kubectl") {
-  
-                    script {
-
-                        // Dry-run
-                        sh "kubectl apply -f prometheus-template.yaml --dry-run=client -o yaml > prometheus-template-dry-run.yaml && mv prometheus-template-dry-run.yaml prometheus-template.yaml"
 
                         // Print yaml
                         sh "cat prometheus-template.yaml"
-
+  
                     }
-
+  
                 }
 
             }
