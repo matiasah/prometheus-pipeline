@@ -3,4 +3,5 @@ kind: Kustomization
 resources:
 - prometheus-template.yaml
 - custom-resource/virtualservice.yaml
+- custom-resource/peerauthentication.yaml
 - custom-resource/destinationrule.yaml
