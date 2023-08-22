@@ -184,8 +184,11 @@ pipeline {
   
                     script {
 
-                        // Print Yaml
+                        // Dry-run
                         sh "kubectl apply -f prometheus-template.yaml --dry-run=client -o yaml > prometheus-template.yaml"
+
+                        // Print yaml
+                        sh "cat prometheus-template.yaml"
 
                     }
 
