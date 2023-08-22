@@ -9,3 +9,6 @@ prometheus:
 prometheus-node-exporter:
   hostRootFsMount:
     enabled: false
+
+crds:
+  enabled: true
