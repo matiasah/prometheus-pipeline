@@ -150,7 +150,7 @@ pipeline {
                         }
 
                         // Template
-                        sh "helm template prometheus prometheus-community/kube-prometheus-stack -f prometheus-values.yaml ${PROMETHEUS_OPTIONS.trim()} --namespace prometheus --include-crds > prometheus-base.yaml"
+                        sh "helm template prometheus prometheus-community/kube-prometheus-stack -f prometheus-values.yaml ${PROMETHEUS_OPTIONS.trim()} --namespace prometheus > prometheus-base.yaml"
         
                     }
 
