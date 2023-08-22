@@ -119,8 +119,8 @@ pipeline {
                     script {
 
                         // Apply
-                        sh "kubectl create namespace prometheus --dry-run=client -o yaml | kubectl apply -f -"
-                        sh "kubectl create namespace prometheus-adapter --dry-run-client -o yaml | kubectl apply -f"
+                        sh "kubectl apply -f prometheus-namespace.yaml"
+                        sh "kubectl apply -f prometheus-adapter-namespace.yaml"
 
                     }
 
