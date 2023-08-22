@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- prometheus-template.yaml
+- prometheus-base.yaml
 - custom-resource/virtualservice.yaml
 - custom-resource/peerauthentication.yaml
 - custom-resource/destinationrule.yaml
