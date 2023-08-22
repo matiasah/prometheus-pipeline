@@ -1,10 +1,76 @@
 apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
-  name: prometheus
+  name: alertmanager-operated
+  namespace: prometheus
+spec:
+  host: alertmanager-operated.prometheus.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: prometheus-grafana
+  namespace: prometheus
+spec:
+  host: prometheus-grafana.prometheus.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: prometheus-kube-prometheus-alertmanager
+  namespace: prometheus
+spec:
+  host: prometheus-kube-prometheus-alertmanager.prometheus.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: prometheus-kube-prometheus-operator
+  namespace: prometheus
+spec:
+  host: prometheus-kube-prometheus-operator.prometheus.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: prometheus-kube-prometheus-prometheus
   namespace: prometheus
 spec:
   host: prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: prometheus-kube-state-metrics
+  namespace: prometheus
+spec:
+  host: prometheus-kube-state-metrics.prometheus.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: prometheus-prometheus-node-exporter
+  namespace: prometheus
+spec:
+  host: prometheus-prometheus-node-exporter.prometheus.svc.cluster.local
   trafficPolicy:
     tls:
       mode: DISABLE
