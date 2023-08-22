@@ -207,7 +207,7 @@ pipeline {
                         if (env.ACTION.equals("Apply")) {
 
                             // Apply
-                            sh "kubectl apply -f prometheus-template.yaml --dry-run=client -o yaml | kubectl apply -f"
+                            sh "kubectl apply -f prometheus-template.yaml"
 
                         // Destroy
                         } else if (env.ACTION.equals("Destroy")) {
