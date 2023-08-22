@@ -159,9 +159,25 @@ pipeline {
                 container ("kustomize") {
   
                     script {
+
+                        // Download envsubst
+                        httpRequest url: "https://github.com/a8m/envsubst/releases/download/v1.2.0/envsubst-Linux-x86_64", outputFile: "envsubst"
+
+                        // Add execution permission to envsubst
+                        sh "chmod +x envsubst"
+                        sh "ls -l -a"
+    
+                        sh '''
+                        for file in ./custom-resource/*; do
+                            ./envsubst < "${file}" > out.txt && mv out.txt "${file}";
+                        done
+                        '''
   
                         // Kustomize
                         sh "kustomize build > prometheus-template.yaml"
+
+                        // Print Yaml
+                        sh "cat prometheus-template.yaml"
   
                     }
   
