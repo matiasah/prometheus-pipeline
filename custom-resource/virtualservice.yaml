@@ -5,9 +5,9 @@ metadata:
   namespace: prometheus
 spec:
   gateways:
-  - gateway/istio-ingressgateway
+  - '$ISTIO_INGRESS_GATEWAY'
   hosts:
-  - "*"
+  - '$ISTIO_HOST'
   http:
   - match:
     - uri:
@@ -20,5 +20,4 @@ spec:
         host: prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local
         port:
           number: 9090
-        subset: http
       weight: 100
