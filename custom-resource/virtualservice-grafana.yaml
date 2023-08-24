@@ -19,5 +19,5 @@ spec:
     - destination:
         host: prometheus-grafana.prometheus.svc.cluster.local
         port:
-          number: 8080
+          number: 80
       weight: 100
