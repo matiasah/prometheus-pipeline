@@ -1,0 +1,10 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: prometheus-grafana
+  namespace: prometheus
+spec:
+  host: prometheus-grafana.prometheus.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: DISABLE
