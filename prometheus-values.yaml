@@ -12,3 +12,8 @@ prometheus-node-exporter:
 
 crds:
   enabled: true
+
+grafana:
+  grafana.ini: |
+    server:
+      serve_from_sub_path: true
