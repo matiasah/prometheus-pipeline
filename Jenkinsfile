@@ -149,6 +149,9 @@ pipeline {
 
                         }
 
+                        // Add Grafana root URL
+                        PROMETHEUS_OPTIONS += "--set grafana.'grafana\\.ini'.server.root_url=\"https://${ISTIO_HOST}/grafana\" "
+
                         // Template
                         sh "helm template prometheus prometheus-community/kube-prometheus-stack -f prometheus-values.yaml ${PROMETHEUS_OPTIONS.trim()} --namespace prometheus > prometheus-base.yaml"
         
