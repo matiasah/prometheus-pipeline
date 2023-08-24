@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: grafana
+  namespace: prometheus
+spec:
+  gateways:
+  - '$ISTIO_INGRESS_GATEWAY'
+  hosts:
+  - '$ISTIO_HOST'
+  http:
+  - match:
+    - uri:
+        prefix: /grafana/
+    name: http
+    rewrite:
+      uri: /
+    route:
+    - destination:
+        host: prometheus-grafana.prometheus.svc.cluster.local
+        port:
+          number: 8080
+      weight: 100
