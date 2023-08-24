@@ -14,6 +14,6 @@ crds:
   enabled: true
 
 grafana:
-  grafana.ini: |
+  grafana.ini:
     server:
       serve_from_sub_path: true
