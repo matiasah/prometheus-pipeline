@@ -14,7 +14,7 @@ spec:
         prefix: /grafana/
     name: http
     rewrite:
-      uri: /
+      uri: /grafana/
     route:
     - destination:
         host: prometheus-grafana.prometheus.svc.cluster.local
