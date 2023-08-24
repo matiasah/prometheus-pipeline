@@ -5,5 +5,5 @@ resources:
 - custom-resource/destinationrule-grafana.yaml
 - custom-resource/destinationrule.yaml
 - custom-resource/peerauthentication.yaml
-- custom-resource/virtualservice-prometheus.yaml
 - custom-resource/virtualservice-grafana.yaml
+- custom-resource/virtualservice-prometheus.yaml
